@@ -18,17 +18,9 @@ eyePath = "/Users/macbook0/Desktop/opencv_faces/venv/lib/python3.9/site-packages
 faceCascade = cv2.CascadeClassifier(cascPath)
 eyeCascade = cv2.CascadeClassifier(eyePath)
 
-# path = Path(__file__).parent
-# path = "../img"
-# for f in path.iterdir():
-#     if not f.startswith('.'):
-
-#       f = str(f)
-
-#       img=cv2.imread(f, 0)
-for file_name in os.listdir("/Users/macbook0/Desktop/opencv_faces/img/"):
+for file_name in os.listdir("/Users/macbook0/Desktop/opencv_faces/face401/"):
     if file_name.split(".")[-1].lower() in {"jpeg", "jpg", "png"}:
-        img = cv2.imread("/Users/macbook0/Desktop/opencv_faces/img/" + file_name, 0)
+        img = cv2.imread("/Users/macbook0/Desktop/opencv_faces/face401/" + file_name, 0)
 
 
         # Read the image
@@ -42,7 +34,7 @@ for file_name in os.listdir("/Users/macbook0/Desktop/opencv_faces/img/"):
         # Detect faces in the image
         faces = faceCascade.detectMultiScale(
             img,
-            scaleFactor=1.5,
+            scaleFactor=1.45,
             minNeighbors=5,
             minSize=(30, 30),
             flags = cv2.CASCADE_SCALE_IMAGE
@@ -53,20 +45,21 @@ for file_name in os.listdir("/Users/macbook0/Desktop/opencv_faces/img/"):
             with open ("face_file.txt", "a") as f:
                 f.write(f"{file_name}\n")
             f.close()
-        
+
+
         if len(faces) == 0:
             with open ("no_face_file.txt", "a") as f:
                 f.write(f"{file_name}\n")
             f.close()
             #print(file_name)
-            os.remove(os.path.abspath("img/" + file_name))
+            os.remove(os.path.abspath("face401/" + file_name))
 
         print("Found {0} faces!".format(len(faces)))
 
         # Draw a rectangle around the faces
-        for (x, y, w, h) in faces:
-            cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        # for (x, y, w, h) in faces:
+        #     cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-        cv2.imshow("Faces found", img)
-        cv2.waitKey(10000)
+        # cv2.imshow("Faces found", img)
+        # cv2.waitKey(10)
 
